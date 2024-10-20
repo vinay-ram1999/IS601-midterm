@@ -18,12 +18,14 @@ class Calculator:
         self.settings.setdefault('ENVIRONMENT', 'PRODUCTION')
         self.opr_handler = OperationHandler()
     
-    def configure_logging(self):
-        logging_conf_path = 'logging.conf'
+    @staticmethod
+    def configure_logging(fpath: str='logging.conf'):
+        logging_conf_path = fpath
         logging.config.fileConfig(logging_conf_path, disable_existing_loggers=False) if os.path.exists(logging_conf_path) else logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-        logging.info("Logging configured.")
+        logging.info(f"Logging configured using {'fileConfig' if os.path.exists(logging_conf_path) else 'basicConfig'} method.")
 
-    def load_environment_variables(self):
+    @staticmethod
+    def load_environment_variables():
         settings = {key: value for key, value in os.environ.items()}
         logging.info("Environment variables loaded.")
         return settings
@@ -33,7 +35,7 @@ class Calculator:
     
     def load_plugins(self):
         plugins_package = 'calculator.plugins'
-        plugins_path = plugins_package.replace('.', '/')
+        plugins_path = plugins_package.replace('.', os.path.sep)
         if not os.path.exists(plugins_path):
             logging.warning(f"Plugins directory '{plugins_path}' not found.")
             return
