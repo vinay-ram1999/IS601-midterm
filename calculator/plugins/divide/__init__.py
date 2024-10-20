@@ -10,5 +10,7 @@ class DivisionOperation(Operation):
 
     def execute(self, *args, **kwargs):
         a, b = args[0]
-        res = f'{a} / {b} = {self.evaluate(a,b)}'
-        logging.info(f'Performed division operation --> {res}'); print(res)
+        res = self.evaluate(a,b)
+        out = f'{a} / {b} = {res}'
+        logging.info(f'Performed division operation --> {out}'); print(out)
+        return res

@@ -7,7 +7,7 @@ import importlib
 import logging
 import logging.config
 
-from calculator.commands import Operation, OperationHandler
+from calculator.commands import Operation, BuiltInOperation, OperationHandler
 
 class Calculator:
     def __init__(self) -> None:
@@ -24,8 +24,7 @@ class Calculator:
         logging.config.fileConfig(logging_conf_path, disable_existing_loggers=False) if os.path.exists(logging_conf_path) else logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         logging.info(f"Logging configured using {'fileConfig' if os.path.exists(logging_conf_path) else 'basicConfig'} method.")
 
-    @staticmethod
-    def load_environment_variables():
+    def load_environment_variables(self):
         settings = {key: value for key, value in os.environ.items()}
         logging.info("Environment variables loaded.")
         return settings
@@ -33,33 +32,35 @@ class Calculator:
     def get_environment_variable(self, env_var: str = 'ENVIRONMENT'):
         return self.settings.get(env_var, None)
     
-    def load_plugins(self):
-        plugins_package = 'calculator.plugins'
-        plugins_path = plugins_package.replace('.', os.path.sep)
-        if not os.path.exists(plugins_path):
-            logging.warning(f"Plugins directory '{plugins_path}' not found.")
-            return
-        for _, plugin_name, is_pkg in pkgutil.iter_modules([plugins_path]):
-            if is_pkg:
-                try:
-                    plugin_module = importlib.import_module(f'{plugins_package}.{plugin_name}')
-                    self.register_plugin_commands(plugin_module, plugin_name)
-                except ImportError as e:
-                    logging.error(f"Error importing plugin {plugin_name}: {e}"); print(f"Error importing plugin {plugin_name}: {e}")
+    def load_builtins_plugins(self):
+        packages = {'Builtins': 'calculator.builtins', 'Plugins': 'calculator.plugins'}
+        for package_key, package in packages.items():
+            package_path = package.replace('.', os.path.sep)
+            if not os.path.exists(package_path):
+                logging.warning(f"{package_key} directory '{package_path}' not found.")
+                return
+            for _, module_name, is_pkg in pkgutil.iter_modules([package_path]):
+                if is_pkg:
+                    try:
+                        package_module = importlib.import_module(f'{package}.{module_name}')
+                        self.register_builtin_plugin_commands(package_module, module_name)
+                    except ImportError as e:
+                        logging.error(f"Error importing {package_key} {module_name}: {e}"); print(f"Error importing {package_key} {module_name}: {e}")
 
-    def register_plugin_commands(self, plugin_module, plugin_name):
-        for item_name in dir(plugin_module):
-            item = getattr(plugin_module, item_name)
+    def register_builtin_plugin_commands(self, package_module, module_name):
+        for item_name in dir(package_module):
+            item = getattr(package_module, item_name)
             if isinstance(item, type) and issubclass(item, Operation) and item is not Operation:
-                # Command names are now explicitly set to the plugin's folder name
-                self.opr_handler.add_operation(plugin_name, item())
-                logging.info(f"Command '{plugin_name}' from plugin '{plugin_name}' registered.")
+                self.opr_handler.add_operation(module_name, item())
+                logging.info(f"Command '{module_name}' from '{module_name}' registered.")
+            elif isinstance(item, type) and issubclass(item, BuiltInOperation) and item is not BuiltInOperation:
+                item_instance = item(); item_instance.opr_handler = self.opr_handler
+                self.opr_handler.add_operation(module_name, item_instance)
     
     def run(self):
-        self.load_plugins()
+        self.load_builtins_plugins()
         logging.info("Application started.")
-        print(f"\nAvailable operations are: {', '.join(list(self.opr_handler.operations.keys()))}")
-        print(f"Usage: Operation num1 num2 (Ex: add 3 4) or type 'exit' to exit.\n")
+        print("\nType 'menu' to see available operations or 'exit' to end the application!\n")
         try:
             while True:  #REPL Read, Evaluate, Print, Loop
                 inp_text = input(">>> ").strip().split(sep=" ")

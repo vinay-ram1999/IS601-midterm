@@ -6,7 +6,9 @@ class AddOperation(Operation):
     def evaluate(a: float, b: float) -> float:
         return a + b
 
-    def execute(self, *args, **kwargs):
+    def execute(self, *args, **kwargs) -> float:
         a, b = args[0]
-        res = f'{a} + {b} = {self.evaluate(a,b)}'
-        logging.info(f'Performed addition operation --> {res}'); print(res)
+        res = self.evaluate(a,b)
+        out = f'{a} + {b} = {res}'
+        logging.info(f'Performed addition operation --> {out}'); print(out)
+        return res

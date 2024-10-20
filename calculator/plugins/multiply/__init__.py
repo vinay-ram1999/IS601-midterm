@@ -8,5 +8,7 @@ class MultiplyOperation(Operation):
 
     def execute(self, *args, **kwargs):
         a, b = args[0]
-        res = f'{a} x {b} = {self.evaluate(a,b)}'
-        logging.info(f'Performed multiplication operation --> {res}'); print(res)
+        res = self.evaluate(a,b)
+        out = f'{a} x {b} = {res}'
+        logging.info(f'Performed multiplication operation --> {out}'); print(out)
+        return res
