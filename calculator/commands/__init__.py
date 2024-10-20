@@ -2,7 +2,7 @@ import logging
 from .operations import Operation, BuiltInOperation
 
 class OperationHandler:
-    history: dict[str:list] = {'operation':[],'input':[],'output':[]}
+    history: dict[str:list] = {'Operation':[],'Arguments':[],'Output':[]}
 
     def __init__(self):
         self.operations = {}
@@ -13,9 +13,9 @@ class OperationHandler:
     @classmethod
     def record_history(cls, opr_name: str, input: tuple, output: float):
         """Add a new calculation record to the history."""
-        cls.history['operation'].insert(0, opr_name)
-        cls.history['input'].insert(0, input)
-        cls.history['output'].insert(0, output)
+        cls.history['Operation'].insert(0, opr_name)
+        cls.history['Arguments'].insert(0, input)
+        cls.history['Output'].insert(0, output)
 
     @classmethod
     def clear_history(cls):

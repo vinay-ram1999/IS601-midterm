@@ -2,6 +2,12 @@ import logging
 from calculator.commands import Operation
 
 class AddOperation(Operation):
+    def __init__(self) -> None:
+        kwargs = {'description':'Add two numbers.',
+                  'arguments': '2',
+                  'usage': f'{__name__.split(".")[-1]} 2 3'}
+        super().__init__(**kwargs)
+
     @staticmethod
     def evaluate(a: float, b: float) -> float:
         return a + b
