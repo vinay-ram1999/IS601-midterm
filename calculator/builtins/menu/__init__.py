@@ -13,16 +13,13 @@ class MenuOperation(BuiltInOperation):
 
     def execute(self, *args, **kwargs):
         assert isinstance(self.opr_handler, OperationHandler), "MenuOperation only takes OperationHandler instance as input."
-        arth_operations = [x for x in self.opr_handler.operations.keys() if isinstance(self.opr_handler.operations[x], Operation)]
-        builtin_operations = [x for x in self.opr_handler.operations.keys() if isinstance(self.opr_handler.operations[x], BuiltInOperation)]
-        dict_tmp = {'Name':[],'Type':[],'Arguments':[],'Usage':[],'Description':[]}
-        for operation in arth_operations + builtin_operations:
-            obj = self.opr_handler.operations[operation]
-            dict_tmp['Name'].append(operation.capitalize())
-            dict_tmp['Type'].append('builtin' if operation in builtin_operations else 'arthematic')
-            dict_tmp['Arguments'].append(obj.arguments)
-            dict_tmp['Usage'].append(obj.usage)
-            dict_tmp['Description'].append(obj.description)
-        out = tabulate(dict_tmp, tablefmt="simple_grid", headers="keys", maxcolwidths=[None, None, None, None, None, 25], showindex=[i+1 for i in range(len(self.opr_handler.operations))])
+        menu_dict = {'Name':[],'Type':[],'Arguments':[],'Usage':[],'Description':[]}
+        for operation in self.opr_handler.operations.keys():
+            menu_dict['Name'].append(operation.capitalize())
+            menu_dict['Type'].append('arthematic' if isinstance(self.opr_handler.operations[operation],Operation) else 'builtin')
+            menu_dict['Arguments'].append(self.opr_handler.operations[operation].arguments)
+            menu_dict['Usage'].append(self.opr_handler.operations[operation].usage)
+            menu_dict['Description'].append(self.opr_handler.operations[operation].description)
+        out = tabulate(menu_dict, tablefmt="simple_grid", headers="keys", maxcolwidths=[None, None, None, None, None, 25], showindex=[i+1 for i in range(len(self.opr_handler.operations))])
         out = f'\nMenu:\n{out}'
-        logging.info(f"Displayed Menu with available options: {builtin_operations + arth_operations} along with their properties to the user."); print(out)
+        print(out); logging.info(f"Displayed Menu with options: {list(menu_dict.keys())} along with their properties to the user.")

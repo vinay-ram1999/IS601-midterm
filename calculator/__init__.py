@@ -16,6 +16,8 @@ class Calculator:
         load_dotenv()
         self.settings = self.load_environment_variables()
         self.settings.setdefault('ENVIRONMENT', 'PRODUCTION')
+        self.settings.setdefault('DATA_DIR', 'data')
+        os.makedirs(self.settings['DATA_DIR'], exist_ok=True)
         self.opr_handler = OperationHandler()
     
     @staticmethod
@@ -54,7 +56,7 @@ class Calculator:
                 self.opr_handler.add_operation(module_name, item())
                 logging.info(f"Command '{module_name}' from '{module_name}' registered.")
             elif isinstance(item, type) and issubclass(item, BuiltInOperation) and item is not BuiltInOperation:
-                item_instance = item(); item_instance.opr_handler = self.opr_handler
+                item_instance = item(); item_instance.opr_handler = self.opr_handler; item_instance.env_vars = self.settings
                 self.opr_handler.add_operation(module_name, item_instance)
     
     def run(self):

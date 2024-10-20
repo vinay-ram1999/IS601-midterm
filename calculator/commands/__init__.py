@@ -1,5 +1,15 @@
 import logging
-from .operations import Operation, BuiltInOperation
+from abc import ABC, abstractmethod
+
+class Operation(ABC):
+    def __init__(self, *args, **kwargs) -> None:
+        if kwargs:
+            for arg in kwargs.keys():
+                setattr(self, arg, kwargs[arg])
+
+    @abstractmethod
+    def execute(self, *args, **kwargs):
+        pass
 
 class OperationHandler:
     history: dict[str:list] = {'Operation':[],'Arguments':[],'Output':[]}
@@ -7,7 +17,7 @@ class OperationHandler:
     def __init__(self):
         self.operations = {}
     
-    def add_operation(self, opr_name: str, operation: Operation | BuiltInOperation):
+    def add_operation(self, opr_name: str, operation: Operation):
         self.operations[opr_name] = operation
 
     @classmethod
@@ -34,3 +44,16 @@ class OperationHandler:
             logging.error('Enter a valid number...'); print('Enter a valid number...')
         except Exception as e:
             logging.error(e); print(e)
+
+class BuiltInOperation(ABC):
+    opr_handler: OperationHandler = None
+    env_vars: dict = None
+
+    def __init__(self, *args, **kwargs) -> None:
+        if kwargs:
+            for arg in kwargs.keys():
+                setattr(self, arg, kwargs[arg])
+
+    @abstractmethod
+    def execute(self, *args, **kwargs):
+        pass

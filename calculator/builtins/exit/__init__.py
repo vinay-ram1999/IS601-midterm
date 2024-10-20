@@ -1,4 +1,5 @@
 import sys
+
 from calculator.commands import BuiltInOperation
 
 class ExitOperation(BuiltInOperation):
