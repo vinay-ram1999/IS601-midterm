@@ -35,7 +35,7 @@ class Calculator:
         return self.settings.get(env_var, None)
     
     def load_builtins_plugins(self):
-        packages = {'Builtins': 'calculator.builtins', 'Plugins': 'calculator.plugins'}
+        packages = {'Plugins': 'calculator.plugins', 'Builtins': 'calculator.builtins'} # The order in this dict decides the order in menu
         for package_key, package in packages.items():
             package_path = package.replace('.', os.path.sep)
             if not os.path.exists(package_path):

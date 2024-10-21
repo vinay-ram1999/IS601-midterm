@@ -14,7 +14,7 @@ class AddOperation(Operation):
 
     def execute(self, *args, **kwargs) -> float:
         a, b = args[0]
-        res = self.evaluate(a,b)
+        res = self.evaluate(float(a),float(b))
         out = f'{a} + {b} = {res}'
         logging.info(f'Performed addition operation --> {out}'); print(out)
         return res

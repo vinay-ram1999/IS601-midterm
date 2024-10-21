@@ -14,7 +14,7 @@ class MultiplyOperation(Operation):
 
     def execute(self, *args, **kwargs):
         a, b = args[0]
-        res = self.evaluate(a,b)
+        res = self.evaluate(float(a),float(b))
         out = f'{a} x {b} = {res}'
         logging.info(f'Performed multiplication operation --> {out}'); print(out)
         return res
