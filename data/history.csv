@@ -1,0 +1,6 @@
+,Operation,Arguments,Output
+0,subtract,"('23', '23')",
+1,multiply,"('23455', '45645645')",
+2,divide,"('12', '34344')",
+3,add,"('23', '34')",
+4,add,"('11', '12')",

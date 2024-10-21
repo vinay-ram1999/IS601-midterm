@@ -16,5 +16,6 @@ class MultiplyOperation(Operation):
         a, b = args[0]
         res = self.evaluate(float(a),float(b))
         out = f'{a} x {b} = {res}'
-        logging.info(f'Performed multiplication operation --> {out}'); print(out)
+        print(out)
+        logging.info(f'Performed multiplication operation --> {out}')
         return res

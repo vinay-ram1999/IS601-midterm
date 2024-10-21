@@ -16,5 +16,6 @@ class SubtractOperation(Operation):
         a, b = args[0]
         res = self.evaluate(float(a),float(b))
         out = f'{a} - {b} = {res}'
-        logging.info(f'Performed substraction operation --> {out}'); print(out)
+        print(out)
+        logging.info(f'Performed substraction operation --> {out}')
         return res

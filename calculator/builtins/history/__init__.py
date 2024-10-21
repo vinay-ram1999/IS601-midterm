@@ -13,5 +13,7 @@ class HistoryOperation(BuiltInOperation):
 
     def execute(self, *args, **kwargs):
         assert isinstance(self.opr_handler, OperationHandler), "HistoryOperation only takes OperationHandler instance as input."
-        out = tabulate(self.opr_handler.history, tablefmt="pretty", headers="keys", numalign="right", floatfmt=".5f", showindex=[i+1 for i in range(len(self.opr_handler.history['Operation']))])
-        print(out); logging.info("Extracted the history of operations executed!")
+        out = tabulate(self.opr_handler.history, tablefmt="pretty", headers="keys", numalign="right", 
+                       floatfmt=".5f", showindex=[i for i in range(len(self.opr_handler.history['Operation']))])
+        print(out)
+        logging.info("Extracted the history of operations executed!")

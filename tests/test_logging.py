@@ -6,6 +6,6 @@ def test_configure_logging(capsys):
     Calculator.configure_logging()
     captured = capsys.readouterr()
     assert 'fileConfig method' in captured.err, "Logging is not configured using the fileConfig method"
-    Calculator.configure_logging(fpath='none')
+    Calculator.configure_logging(logging_conf_path='none')
     captured = capsys.readouterr()
     assert 'basicConfig method' in captured.err, "Logging is not configured using the basicConfig method"

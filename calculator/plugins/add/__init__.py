@@ -16,5 +16,6 @@ class AddOperation(Operation):
         a, b = args[0]
         res = self.evaluate(float(a),float(b))
         out = f'{a} + {b} = {res}'
-        logging.info(f'Performed addition operation --> {out}'); print(out)
+        print(out)
+        logging.info(f'Performed addition operation --> {out}')
         return res

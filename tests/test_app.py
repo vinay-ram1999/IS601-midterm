@@ -1,4 +1,5 @@
 """Test app"""
+import os
 import pytest
 from calculator import Calculator
 
@@ -14,6 +15,21 @@ def test_app_start_empty_history(capfd, monkeypatch):
     desired = '+-----------+-----------+--------+\n| Operation | Arguments | Output |\n+-----------+-----------+--------+\n+-----------+-----------+--------+\n'
     assert desired in captured.out, "the app is not printing out empty history"
 
+def test_app_start_empty_csv(capfd, monkeypatch):
+    """Test the exported empty csv"""
+    inputs = iter(['export history_pytest', 'exit'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    app = Calculator()
+    default_csv_abs = os.path.abspath(os.path.join(app.get_data_dir_variable(),'history_empty.csv'))
+    expected_csv_abs = os.path.abspath(os.path.join(app.get_data_dir_variable(),'history_pytest.csv'))
+    with pytest.raises(SystemExit):
+        app.run()
+    captured = capfd.readouterr()
+    assert expected_csv_abs in captured.out, "the absolute file path is not exported/returned correctly"
+    with open(default_csv_abs, encoding='utf-8') as f1:
+        with open(expected_csv_abs, encoding='utf-8') as f2:
+            assert f1.read() == f2.read(), "The default csv and exported csv are not similar"
+
 @pytest.mark.parametrize("operation, arg1, arg2", [
     ('add',1,1),
     ('subtract',1,1),
@@ -21,7 +37,7 @@ def test_app_start_empty_history(capfd, monkeypatch):
     ('divide',1,1),
     ('menu','',''),
     ('history','',''),
-    ('export','',''),
+    ('export','history_pytest',''),
 ])
 def test_calculation_operations(operation, arg1, arg2, monkeypatch):
     """simulate operation followed by exit"""

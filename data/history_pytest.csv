@@ -1,0 +1,5 @@
+,Operation,Arguments,Output
+0,divide,"('1', '1')",1.0
+1,multiply,"('1', '1')",1.0
+2,subtract,"('1', '1')",0.0
+3,add,"('1', '1')",2.0

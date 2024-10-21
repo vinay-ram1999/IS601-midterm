@@ -18,5 +18,6 @@ class DivisionOperation(Operation):
         a, b = args[0]
         res = self.evaluate(float(a),float(b))
         out = f'{a} / {b} = {res}'
-        logging.info(f'Performed division operation --> {out}'); print(out)
+        print(out)
+        logging.info(f'Performed division operation --> {out}')
         return res
