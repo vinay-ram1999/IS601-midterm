@@ -101,3 +101,15 @@ def test_plugin_builtin_operations(operation, arg1, arg2, monkeypatch):
     with pytest.raises(SystemExit) as e:
         app.run()
     assert str(e.value) == "Exiting...", "The app did not exit as expected"
+
+def test_start_clear_history(capfd, monkeypatch):
+    """Test the output of empty history call"""
+    inputs = iter(['clear', 'exit'])
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+    app = Calculator()
+    with pytest.raises(SystemExit):
+        app.run()
+    captured = capfd.readouterr()
+    desired = '+-----------+-----------+--------+\n| Operation | Arguments | Output |\n+-----------+-----------+--------+\n+-----------+-----------+--------+\n'
+    assert desired in captured.out
+    assert "Cleared current session history." in captured.out

@@ -8,7 +8,7 @@ from calculator.commands import BuiltInOperation
 
 class ImportOperation(BuiltInOperation):
     def __init__(self) -> None:
-        kwargs = {'description':"Imports the calculation history from given .csv file.",
+        kwargs = {'description':"Imports operations from given .csv file and adds it to current session history.",
                   'arguments': '1',
                   'usage': f'{__name__.split(".")[-1]} your/file/path.csv'}
         super().__init__(**kwargs)

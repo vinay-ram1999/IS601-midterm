@@ -6,7 +6,7 @@ from calculator.commands import Operation, BuiltInOperation
 
 class MenuOperation(BuiltInOperation):
     def __init__(self) -> None:
-        kwargs = {'description':'Displays all available Arithmetic and BuiltIn operations.',
+        kwargs = {'description':'Displays all available arithmetic and builtIn operations.',
                   'arguments': 'None',
                   'usage': f'{__name__.split(".")[-1]}'}
         super().__init__(**kwargs)
@@ -22,5 +22,5 @@ class MenuOperation(BuiltInOperation):
         out = tabulate(menu_dict, tablefmt="pretty", stralign='left', headers="keys", maxcolwidths=[2, None, None, 6, None, 25], 
                        showindex=[i+1 for i in range(len(self.opr_handler.operations))])
         out = f'\nMenu:\n{out}'
-        print(out)
         logging.info(f"Displayed Menu with options: {list(menu_dict.keys())} along with their properties.")
+        print(out)
