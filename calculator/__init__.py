@@ -63,6 +63,7 @@ class Calculator:
             elif isinstance(item, type) and issubclass(item, BuiltInOperation) and item is not BuiltInOperation:
                 item_instance = item()
                 item_instance.opr_handler = self.opr_handler
+                assert isinstance(item_instance.opr_handler, OperationHandler), "BuiltInOperation.opr_handler only takes OperationHandler instance as input."
                 item_instance.env_vars = self.settings
                 self.opr_handler.add_operation(module_name, item_instance)
     
@@ -75,7 +76,9 @@ class Calculator:
                 inp_text = input(">>> ").strip().split(sep=" ")
                 self.opr_handler.run_operation(inp_text[0], inp_text[1:])
         except KeyboardInterrupt:
-            logging.info("Application interrupted and exiting gracefully.")
+            msg = "Application interrupted and exiting gracefully."
+            logging.info(msg)
+            print(msg)
             sys.exit(0)  # Assuming a KeyboardInterrupt should also result in a clean exit.
         finally:
             logging.info("Application shutdown.")

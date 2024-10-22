@@ -2,7 +2,7 @@ from tabulate import tabulate
 
 import logging
 
-from calculator.commands import Operation, BuiltInOperation, OperationHandler
+from calculator.commands import Operation, BuiltInOperation
 
 class MenuOperation(BuiltInOperation):
     def __init__(self) -> None:
@@ -12,7 +12,6 @@ class MenuOperation(BuiltInOperation):
         super().__init__(**kwargs)
 
     def execute(self, *args, **kwargs):
-        assert isinstance(self.opr_handler, OperationHandler), "MenuOperation only takes OperationHandler instance as input."
         menu_dict = {'Name':[],'Type':[],'n_Args':[],'Usage':[],'Description':[]}
         for operation in self.opr_handler.operations.keys():
             menu_dict['Name'].append(operation)

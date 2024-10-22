@@ -48,12 +48,12 @@ class OperationHandler:
         except KeyError as e:
             frm = inspect.trace()[-1]
             msg = f"KeyError: '{opr_name}' operation is not available" if frm.function == self.run_operation.__name__ else f'KeyError: {e.args[-1]}'
-            logging.error(e, exc_info=True)
+            logging.error(e.add_note(msg), exc_info=True)
             print(msg)
         except ValueError as e:
             frm = inspect.trace()[-1]; mod = inspect.getmodule(frm.frame)
             msg = 'ValueError: Incorrect operation call...' if (mod) and (('plugins' in mod.__name__) or ('builtins' in mod.__name__)) else f'ValueError: {e.args[-1]}'
-            logging.error(e, exc_info=True)
+            logging.error(e.add_note(msg), exc_info=True)
             print(msg)
         except Exception as e:
             logging.error(e, exc_info=True)
