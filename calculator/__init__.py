@@ -7,12 +7,12 @@ import importlib
 import logging
 import logging.config
 
+from calculator.logger import configure_logging
 from calculator.commands import Operation, BuiltInOperation, OperationHandler
 
 class Calculator:
     def __init__(self) -> None:
-        os.makedirs('logs', exist_ok=True)
-        self.configure_logging()
+        configure_logging()
         load_dotenv()
         self.settings = self.load_environment_variables()
         self.settings.setdefault('ENVIRONMENT', 'PRODUCTION')
@@ -21,11 +21,6 @@ class Calculator:
         os.makedirs(self.settings['DATA_DIR_ABS'], exist_ok=True)
         logging.info(f'Directory for data is setup to: {self.settings["DATA_DIR_ABS"]}')
         self.opr_handler = OperationHandler()
-    
-    @staticmethod
-    def configure_logging(logging_conf_path: str='logging.conf'):
-        logging.config.fileConfig(logging_conf_path, disable_existing_loggers=False) if os.path.exists(logging_conf_path) else logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-        logging.info(f"Logging configured using {'fileConfig' if os.path.exists(logging_conf_path) else 'basicConfig'} method.")
 
     def load_environment_variables(self):
         settings = {key: value for key, value in os.environ.items()}
