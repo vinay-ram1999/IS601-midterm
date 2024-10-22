@@ -61,6 +61,8 @@ def test_start_export_empty_csv(capfd, monkeypatch):
     'import abc.cs',
     'import abc.csv',
     'export history.cv',
+    'delete',
+    'delete 9999',
     'exit'] # There should be an exit command at the end
 ])
 def test_simulate_known_exceptions(operations, capfd, monkeypatch):
@@ -82,6 +84,11 @@ def test_simulate_known_exceptions(operations, capfd, monkeypatch):
     assert f"{os.path.sep}abc.csv does not exists" in captured.out
     # Verify export error
     assert "AssertionError: The file_name argument should end with '.csv'" in captured.out
+    # Verify delete errors
+    assert "AssertionError: Index arguments for deleting are not provided" in captured.out
+    assert "AssertionError: The index values [9999] are out of bounds, please specify index within the range of history" in captured.out
+    # Verify exit finally clause
+    assert "Application shutdown." in captured.out
 
 @pytest.mark.parametrize("operation, arg1, arg2", [
     ('add',1,1),
@@ -92,6 +99,7 @@ def test_simulate_known_exceptions(operations, capfd, monkeypatch):
     ('history','',''),
     ('export','history_pytest.csv',''),
     ('import','data/import.csv',''),
+    ('delete',0,1),
 ])
 def test_plugin_builtin_operations(operation, arg1, arg2, monkeypatch):
     """simulate operation followed by exit"""

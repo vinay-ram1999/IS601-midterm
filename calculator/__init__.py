@@ -76,9 +76,8 @@ class Calculator:
                 inp_text = input(">>> ").strip().split(sep=" ")
                 self.opr_handler.run_operation(inp_text[0], inp_text[1:])
         except KeyboardInterrupt:
-            msg = "Application interrupted and exiting gracefully."
+            msg = "Application interrupted and exiting gracefully."; logging.info(msg); print(msg); sys.exit(0)  # Assuming a KeyboardInterrupt should also result in a clean exit.
+        finally:
+            msg = "Application shutdown."
             logging.info(msg)
             print(msg)
-            sys.exit(0)  # Assuming a KeyboardInterrupt should also result in a clean exit.
-        finally:
-            logging.info("Application shutdown.")

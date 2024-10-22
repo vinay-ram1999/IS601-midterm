@@ -1,4 +1,5 @@
 import pandas as pd
+from tabulate import tabulate
 
 import logging
 import inspect
@@ -19,7 +20,7 @@ class OperationHandler:
 
     def __init__(self):
         self.operations = {}
-    
+
     def add_operation(self, opr_name: str, operation: Operation):
         self.operations[opr_name] = operation
 
@@ -31,20 +32,36 @@ class OperationHandler:
         cls.history['Output'].insert(0, output)
 
     @classmethod
+    def tabulate_history(cls) -> str:
+        """Tabulates cls.history"""
+        out = tabulate(cls.history, tablefmt="pretty", headers="keys", numalign="right", 
+                       showindex=[i[0] for i in enumerate(list(cls.history.values())[0])])
+        return out
+
+    @classmethod
     def clear_history(cls):
         """Clear all calculations from cls.history"""
         cls.history = {'Operation':[],'Arguments':[],'Output':[]}
-    
+
+    @classmethod
+    def delete_history(cls, idx: list):
+        """Delete 1 or more operations from cls.history"""
+        current_len = len(list(cls.history.values())[0])
+        failed_idx = [i for i in idx if i > (current_len - 1)]
+        assert failed_idx == [], f"The index values {failed_idx} are out of bounds, please specify index within the range of history"
+        for key in cls.history.keys():
+            cls.history[key] = [cls.history[key][x] for x in range(len(cls.history[key])) if x not in idx]
+
     @classmethod
     def history_df(cls) -> pd.DataFrame:
         """Convert cls.history from dict to pandas DataFrame"""
         df = pd.DataFrame(cls.history)
         return df
-    
+
     def run_operation(self, opr_name: str=None, input: list | str=None):
         try:
             output = self.operations[opr_name].execute(input)
-            self.record_history(opr_name, tuple(input), output) if isinstance(self.operations[opr_name], Operation) else None
+            self.record_history(opr_name, tuple([float(x) for x in input]), output) if isinstance(self.operations[opr_name], Operation) else None
         except KeyError as e:
             frm = inspect.trace()[-1]
             msg = f"KeyError: '{opr_name}' operation is not available" if frm.function == self.run_operation.__name__ else f'KeyError: {e.args[-1]}'

@@ -1,4 +1,3 @@
-from tabulate import tabulate
 import pandas as pd
 
 import logging
@@ -30,8 +29,7 @@ class ImportOperation(BuiltInOperation):
             logging.info(msg)
             for key in self.opr_handler.history.keys():
                 self.opr_handler.history[key] = imported_history[key] + self.opr_handler.history[key]
-            out = tabulate(imported_history, tablefmt="pretty", headers="keys", numalign="right", 
-                       floatfmt=".5f", showindex=[i[0] for i in enumerate(list(imported_history.values())[0])])
+            out = self.opr_handler.tabulate_history()
             logging.info("Displayed the imported history of operations and appended them to the existing history")
             print(f'{out}\nThese operations are imported and added to history and can be viewed using the appropriate operation.')
         except (IndexError, AssertionError) as e:
