@@ -19,7 +19,7 @@ class MenuOperation(BuiltInOperation):
             menu_dict['n_Args'].append(self.opr_handler.operations[operation].arguments)
             menu_dict['Usage'].append(self.opr_handler.operations[operation].usage)
             menu_dict['Description'].append(self.opr_handler.operations[operation].description)
-        out = tabulate(menu_dict, tablefmt="pretty", stralign='left', headers="keys", maxcolwidths=[2, None, None, 6, None, 25], 
+        out = tabulate(menu_dict, tablefmt="pretty", stralign='left', headers="keys", maxcolwidths=[2, None, None, 6, None, 50], 
                        showindex=[i+1 for i in range(len(self.opr_handler.operations))])
         out = f'\nMenu:\n{out}'
         logging.info(f"Displayed Menu with options: {list(menu_dict.keys())} along with their properties.")

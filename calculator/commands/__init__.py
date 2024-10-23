@@ -34,8 +34,14 @@ class OperationHandler:
     @classmethod
     def tabulate_history(cls) -> str:
         """Tabulates cls.history"""
-        out = tabulate(cls.history, tablefmt="pretty", headers="keys", numalign="right", 
-                       showindex=[i[0] for i in enumerate(list(cls.history.values())[0])])
+        out = cls.tabulate_input_dict(cls.history)
+        return out
+    
+    @staticmethod
+    def tabulate_input_dict(inp_dict: dict) -> str:
+        """Tabulates the inp_dict"""
+        out = tabulate(inp_dict, tablefmt="pretty", headers="keys", numalign="right", 
+                       showindex=[i[0] for i in enumerate(list(inp_dict.values())[0])])
         return out
 
     @classmethod

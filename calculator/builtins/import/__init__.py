@@ -29,7 +29,7 @@ class ImportOperation(BuiltInOperation):
             logging.info(msg)
             for key in self.opr_handler.history.keys():
                 self.opr_handler.history[key] = imported_history[key] + self.opr_handler.history[key]
-            out = self.opr_handler.tabulate_history()
+            out = self.opr_handler.tabulate_input_dict(imported_history)
             logging.info("Displayed the imported history of operations and appended them to the existing history")
             print(f'{out}\nThese operations are imported and added to history and can be viewed using the appropriate operation.')
         except (IndexError, AssertionError) as e:
