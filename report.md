@@ -48,9 +48,9 @@ The Read-Eval-Print Loop (REPL) provides an intuitive command-line interface tha
 ### 6. User-Friendly Output
 - The commands `menu`, `history`, `import`, `clear`, and `delete` display output in a clear, tabulated format using the `tabulate` library. This ensures that users have a readable, structured view of their data and operations. Two examples of both `menu` and `history` operations are displayed below.
 
-![alt text](https://github.com/vinay-ram1999/IS601-midterm/tree/master/static/menu.png)
+![menu](./static/menu.png)
 
-![alt text](https://github.com/vinay-ram1999/IS601-midterm/tree/master/static/history.png)
+![history](./static/history.png)
 
 ### 7. Version Control
 - **Git Best Practices**: This project is maintained using Git version control. Best practices such as branching for feature development and using logical, meaningful commit messages were followed throughout the project lifecycle.
@@ -75,7 +75,7 @@ The Read-Eval-Print Loop (REPL) provides an intuitive command-line interface tha
 ### Facade Pattern
 Used to hide the complexity of interacting with Pandas DataFrames and CSV file handling, providing a simple interface for managing history. As you can see below, we are only instantiating the `Calculator` class in `main.py` and everything else is handled within this class.
 
-https://github.com/vinay-ram1999/IS601-midterm/blob/e78bb07c4f31ae50fd16221fd9d7fe24023fe2fb/main.py#L1-L5
+https://github.com/vinay-ram1999/IS601-midterm/blob/e78bb07c4f31ae50fd16221fd9d7fe24023fe2fb/main.py#L1-L4
 
 ### Command Pattern
 The REPL structure follows the Command Pattern, where each operation (arithmetic or builtin command) is encapsulated in a command class.
