@@ -48,9 +48,9 @@ The Read-Eval-Print Loop (REPL) provides an intuitive command-line interface tha
 ### 6. User-Friendly Output
 - The commands `menu`, `history`, `import`, `clear`, and `delete` display output in a clear, tabulated format using the `tabulate` library. This ensures that users have a readable, structured view of their data and operations. Two examples of both `menu` and `history` operations are displayed below.
 
-![menu](https://github.com/vinay-ram1999/IS601-midterm/tree/master/static/menu.png)
+![alt text](https://github.com/vinay-ram1999/IS601-midterm/tree/master/static/menu.png)
 
-![history](https://github.com/vinay-ram1999/IS601-midterm/tree/master/static/history.png)
+![alt text](https://github.com/vinay-ram1999/IS601-midterm/tree/master/static/history.png)
 
 ### 7. Version Control
 - **Git Best Practices**: This project is maintained using Git version control. Best practices such as branching for feature development and using logical, meaningful commit messages were followed throughout the project lifecycle.
@@ -75,7 +75,7 @@ The Read-Eval-Print Loop (REPL) provides an intuitive command-line interface tha
 ### Facade Pattern
 Used to hide the complexity of interacting with Pandas DataFrames and CSV file handling, providing a simple interface for managing history. As you can see below, we are only instantiating the `Calculator` class in `main.py` and everything else is handled within this class.
 
-https://github.com/vinay-ram1999/IS601-midterm/blob/e78bb07c4f31ae50fd16221fd9d7fe24023fe2fb/main.py#L1C1-L4C29?plain=1
+https://github.com/vinay-ram1999/IS601-midterm/blob/e78bb07c4f31ae50fd16221fd9d7fe24023fe2fb/main.py#L1-L5
 
 ### Command Pattern
 The REPL structure follows the Command Pattern, where each operation (arithmetic or builtin command) is encapsulated in a command class.
@@ -85,13 +85,14 @@ The code is written to be reusable and maintainable, with error handling that en
 
 A good exaple for DRY is mentioned below, where the function `tabulate_input_dict` from `OperationHandler` class is used to structure the outputs of commands like `history`, `import`, `clear` and `delete` before printing to the console.
 
-https://github.com/vinay-ram1999/IS601-midterm/blob/e78bb07c4f31ae50fd16221fd9d7fe24023fe2fb/calculator/commands/__init__.py#L40C1-L46C1?plain=1
+https://github.com/vinay-ram1999/IS601-midterm/blob/e78bb07c4f31ae50fd16221fd9d7fe24023fe2fb/calculator/commands/__init__.py#L40-L46
 
 There are many cases where LBYL and EAFP design principles are used out of which two examples are mentioned below for reference.
 
-https://github.com/vinay-ram1999/IS601-midterm/blob/e78bb07c4f31ae50fd16221fd9d7fe24023fe2fb/calculator/__init__.py#L65C1-L78C23?plain=1
+https://github.com/vinay-ram1999/IS601-midterm/blob/e78bb07c4f31ae50fd16221fd9d7fe24023fe2fb/calculator/__init__.py#L65-L78
 
-https://github.com/vinay-ram1999/IS601-midterm/blob/e78bb07c4f31ae50fd16221fd9d7fe24023fe2fb/calculator/builtins/export/__init__.py#L20?plain=1
+https://github.com/vinay-ram1999/IS601-midterm/blob/e78bb07c4f31ae50fd16221fd9d7fe24023fe2fb/calculator/builtins/export/__init__.py#L20
+
 ---
 
 ## Logging and Error Handling
