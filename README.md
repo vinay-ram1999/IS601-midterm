@@ -35,4 +35,4 @@ This will launch the REPL where you can perform arithmetic operations, view, imp
 
 ---
 
-* [Click here](./report.md) ti see the project report.
+* [Click here](./report.md) to see the project report.
