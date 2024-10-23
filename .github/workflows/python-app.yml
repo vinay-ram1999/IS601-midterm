@@ -28,6 +28,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest pytest-pylint pytest-cov
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Load .env file
+      uses: xom9ikk/dotenv@v2.3.0
+      with:
+        mode: development
+        load-mode: strict
     - name: Test with pytest --pylint
       run: |
         pytest --pylint --cov
