@@ -64,8 +64,9 @@ class Calculator:
     
     def run(self):
         self.load_builtins_plugins()
-        logging.info("Application started.")
-        print("\nType 'menu' to see available operations or 'exit' to end the application!\n")
+        msg = "Application started!"
+        logging.info(msg)
+        print(f"{msg}\nType 'menu' to see available operations or 'exit' to end the application.")
         try:
             while True:  #REPL Read, Evaluate, Print, Loop
                 inp_text = input(">>> ").strip().split(sep=" ")
