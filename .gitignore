@@ -1,5 +1,6 @@
 *.pyc
 *.DS_Store
+*.mkv
 
 #.env unignoring to make it visible to grader
 logs/

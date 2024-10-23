@@ -38,10 +38,11 @@ This project implements a fully functional command-line calculator with support 
 
 Once installed, you can run the calculator application using:
 ```bash
-python main.py
+python3 main.py
 ```
 This will launch the REPL where you can perform arithmetic operations, view history, load plugins, and more.
-Demo video goes here!
+
+* [Demo video](https://drive.google.com/file/d/1ZItMBNr6_RMVWchEPPtiMEIKS0Q4mbv7/view?usp=sharing) for using the application!
 
 ---
 
